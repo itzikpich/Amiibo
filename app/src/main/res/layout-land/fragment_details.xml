@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:animateLayoutChanges="true"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/details_image"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/details_button"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_width="276dp"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="details_character, details_game_series, details_amiibo_series"
+        app:flow_maxElementsWrap="3"
+        app:flow_verticalStyle="packed"
+        app:flow_wrapMode="aligned"
+        app:layout_constraintEnd_toStartOf="@id/details_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/details_character"
+        style="@style/Theme.AmiiboAPIApp.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Mario" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/details_game_series"
+        style="@style/Theme.AmiiboAPIApp.DetailsItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Super Mario" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/details_amiibo_series"
+        style="@style/Theme.AmiiboAPIApp.DetailsItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Super Smash Bros." />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/details_button"
+        style="@style/Theme.AmiiboAPIApp.RoundedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Purchase"
+        android:background="@drawable/purchase_button_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

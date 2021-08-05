@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Amiibo API App</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="action_cart">Purchased</string>
+    <string name="add">add</string>
+    <string name="purchase">Purchase</string>
+    <string name="purchased">Purchased</string>
+    <string name="save">Save</string>
+</resources>
