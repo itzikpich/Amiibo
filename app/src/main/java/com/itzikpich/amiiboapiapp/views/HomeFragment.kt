@@ -83,6 +83,7 @@ class HomeFragment: Fragment() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_purchased -> {
@@ -111,6 +112,7 @@ class HomeFragment: Fragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         menu.findItem(R.id.action_purchased).icon = ContextCompat.getDrawable(binding.root.context,
             if (!mainViewModel.isFiltering) R.drawable.baseline_shopping_gold else R.drawable.shopping_cart_white

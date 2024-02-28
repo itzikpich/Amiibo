@@ -1,16 +1,18 @@
 package com.itzikpich.amiiboapiapp.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.itzikpich.amiiboapiapp.R
 import com.itzikpich.amiiboapiapp.databinding.FragmentDetailsBinding
-import com.itzikpich.amiiboapiapp.models.Purchase
 import com.itzikpich.amiiboapiapp.utilities.loadFromUrlToGlide
 import com.itzikpich.amiiboapiapp.view_models.DetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,14 +23,6 @@ class DetailsFragment: Fragment() {
 
     lateinit var binding: FragmentDetailsBinding
     private val detailsViewModel by viewModels<DetailsViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // get id from MainFragment
-        (this.arguments?.get("id") as? String)?.let {
-            detailsViewModel.getAmiiboById(it) // get amiibo item from db
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailsBinding.inflate(inflater)
@@ -42,7 +36,6 @@ class DetailsFragment: Fragment() {
 
         // listen to updates on the Amiibo item
         detailsViewModel.amiibo.observe(viewLifecycleOwner) { amiibo ->
-            Log.d("itzik", amiibo.toString())
             binding.apply {
                 amiibo.image?.let { detailsImage.loadFromUrlToGlide(it) }
                 detailsCharacter.text = amiibo.character
@@ -51,15 +44,13 @@ class DetailsFragment: Fragment() {
                 detailsButton.isEnabled = !amiibo.isPurchased
                 detailsButton.text = resources.getString(if (amiibo.isPurchased) R.string.purchased else R.string.purchase)
                 detailsButton.setOnClickListener {
-                    if (!amiibo.isPurchased) {
-                        detailsViewModel.savePurchaseToDb(Purchase(amiibo.id)) // add purchase to Purchased
-                        detailsViewModel.updateAmiibo(amiibo.copy(isPurchased = true)) // update Amiibo item
-                    }
+                    detailsViewModel.onItemClicked()
                 }
             }
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         // hide all menu items
         menu.findItem(R.id.action_purchased).isVisible = false

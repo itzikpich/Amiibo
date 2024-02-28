@@ -17,15 +17,16 @@ import com.itzikpich.amiiboapiapp.databinding.FragmentAddBinding
 import com.itzikpich.amiiboapiapp.utilities.loadFromUrlToGlide
 import com.itzikpich.amiiboapiapp.view_models.AddViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class AddFragment: Fragment() {
 
-    lateinit var binding: FragmentAddBinding
+    private lateinit var binding: FragmentAddBinding
     private val addViewModel by viewModels<AddViewModel>()
 
     // use this as startActivityFroResult is deprecated
-    lateinit var imageRequest: ActivityResultLauncher<Intent>
+    private lateinit var imageRequest: ActivityResultLauncher<Intent>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAddBinding.inflate(inflater)
@@ -54,7 +55,8 @@ class AddFragment: Fragment() {
             }
             this.saveButton.setOnClickListener {
                 if (!addTitle.text.isNullOrBlank() && addViewModel.imageUri.value != null) {
-                    addViewModel.addAmiibo(addTitle.text.toString().capitalize())
+                    addViewModel.addAmiibo(addTitle.text.toString()
+                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
                 } else {
                     addViewModel.showMessage("Item must contain title and image")
                 }
@@ -80,6 +82,7 @@ class AddFragment: Fragment() {
     }
 
     // hide menu items
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         menu.findItem(R.id.action_purchased).isVisible = false
         menu.findItem(R.id.menu_refresh).isVisible = false
